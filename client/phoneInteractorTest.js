@@ -1,19 +1,10 @@
-if (Meteor.isClient) {
-  Template.hello.greeting = function () {
-    return "Welcome to phoneInteractorTest.";
-  };
+Template.qrWaiter.rendered = function() {
+	qrCodeBaseURL = "http://phoneInteractorTest.meteor.com/interact/";
+	qrUUID = Meteor.uuid();
+	$('#qrcode').qrcode(qrCodeBaseURL + qrUUID);
+};
 
-  Template.hello.events({
-    'click input' : function () {
-      // template data, if any, is available in 'this'
-      if (typeof console !== 'undefined')
-        console.log("You pressed the button");
-    }
-  });
-}
-
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
-  });
-}
+Template.qrDisp.qrs =  function() {return Interactors.find()};
+Template.qrDisp.rendered = function () {
+	console.log("QRD Rendered");
+};
