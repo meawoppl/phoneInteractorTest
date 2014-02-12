@@ -1,16 +1,21 @@
 // Make Subscription To Shared Data
-getCurrentActivity = SharedState.findOne({});
+// getCurrentActivity = SharedState.findOne({});
 
-// Viewport (side 1 of our pair)
-Template.ViewPort.helpers({
-	content: function(data){
-		return "I Am The View Port";
-	}
-});
+Template.QRCodeDisplay.rendered = function() {
+	Meteor.call("getQRUUID", function (err, result) {
+		var url = "http://phoneInteractorTest.meteor.com/interact/" + result;
+		$('#qrcode').qrcode(url);
+	});
+};
 
-// Phoneport (side 2 of the pair)
-Template.PhonePort.helpers({
-	content: function(data){
-		return "I am the Phone Port";
-	}
-});
+Template.QRDump.siJSON = function() {
+	return JSON.stringify(SoleUserCollection.findOne());
+}
+
+Template.ViewPort.content = function(data) {
+	return Template["QRDiagnostic"](data);
+};
+
+Template.PhonePort.content = function(data){
+	return Meteor.render(data.currentTemplate);
+}

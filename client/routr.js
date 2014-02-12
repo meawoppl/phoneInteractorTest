@@ -5,29 +5,25 @@ Router.configure({
 });
 
 Router.map(function () {
-  /**
-   * The route's name is "home"
-   * The route's template is also "home"
-   * The default action will render the home template
-   */
+  // Root URL. . . not used?
   this.route('default', {
     path: '/',
     template: 'home'
   });
 
-  /**
-   * The route's name is "posts"
-   * The route's path is "/posts"
-   * The route's template is inferred to be "posts"
-   */
+  this.route("viewport", {
+    path: "/viewport",
+    template: "ViewPort",
+    before: function () { /* TODO: Auth Check? */ },
+  });
+
   this.route('interactor', {
     path: '/interact/:_id',
-    load: function () {
-      // called on first load
-      console.log(this.params._id);
-      var timeInMs = (new Date).getTime();
-      Interactors.insert({_id: this.params._id, time: timeInMs})
+    template: "PhonePort",
+    before: function () { 
+      Meteor.call("tryQRLogin", this.params._id); 
     }
   });
+
 });
 	    

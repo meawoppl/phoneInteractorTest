@@ -6,24 +6,30 @@
   {{> layout}}
 </body>
 
-<template name="home">
-  {{> qrWaiter}}
-  {{> qrDisp}}
+<template name="ViewPort">
+  {{{content}}
 </template>
 
-<template name="qrDisp">
-QRS Logged in:
-<table>
-{{#each qrs}}
-  <tr> <td>{{this._id}}</td></tr>
-{{/each}}
-</table>
+<template name="PhonePort">
+  {{{content}}}
 </template>
 
-<template name="qrWaiter">
-	<div id="qrcode"></div>	
+<template name="QRDiagnostic">
+  {{> QRCodeDisplay }}
+  {{> QRDump }}
+</template>
+
+<template name="QRDump">
+SI Datum:
+  <table>
+  {{siJSON}}
+  </table>
+</template>
+
+<template name="QRCodeDisplay">
+  <div id="qrcode"></div>   
 </template>
 
 <template name="layout">
-	{{yield}}
+  {{yield}}
 </template>
